@@ -74,16 +74,7 @@ router.post('/preferencias', function(req, res, error) {
                 });
         };
         
-        var chequeoBD = false
-        
-        while(chequeoBD == false){
-            if(objetosGlobales[position].bdEstado == "guardado"){
-                console.log('Información de BD guardada')
-                setTimeout(function(){Test(options)},1000)
-                chequeoBD == true
-            }
-            
-        }
+        Test(options)
         
     }
                                 
