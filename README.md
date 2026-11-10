@@ -7,4 +7,7 @@ The backend API for Plyst Me, a music recommendation platform: Spotify Web API i
 
 **Context:** 2019, where I was CTO. This is product code, not an exercise: it shipped, and the recommendation model was part of my responsibility.
 
-**Note:** `secret-config.json` contains a session secret from that era. It is unused, but rotate it if this repository is ever made public.
+**Security note (2026-11-10):** `secret-config.json` held a session secret and was committed in 2021.
+Every branch in this repository has been rewritten to remove it, and the credential has been rotated.
+GitHub keeps pull-request references immutable, so the old blob may still be reachable from some
+`refs/pull/*` entries; it no longer grants access to anything.
