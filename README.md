@@ -58,8 +58,13 @@ app, which is why the event arrow leaves the container and comes back to the bro
 
 ```bash
 npm install
-npm start        # nodemon index.js
+npm start        # node index.js
+npm run dev      # nodemon index.js, for development only
 ```
+
+`npm start` runs the server directly. It used to launch `nodemon`, which put a file
+watcher in front of a production process and was also the source of two dev-only
+advisories; the watcher now lives in `npm run dev`.
 
 Two branches at startup, and they behave differently:
 
@@ -100,6 +105,18 @@ in the product diagram above ran separately, over HTTP.
 `connection` · `crearEvento` · `crearEventoCodigo` · `EventoConexion` · `usuarioNuevoCodigo` ·
 `usuarioNuevoUbicacion` · `disconnect`
 
+## Dependencies
+
+`npm audit` on this repository: **two moderate advisories left, both dev-only**
+(`nodemon` and its transitive `minimatch`). Everything reachable from the server is clean.
+
+- `supercolliderjs` was removed: nothing imported it, and the controller that mentions it
+  has its body commented out.
+- Upgraded: `ejs` 3.1.10, `newrelic` 14.12.0, `nodemon` 3.1.14.
+- `nodemon` moved to `devDependencies`.
+- An override pinning `minimatch` to 10 was tried and reverted: it pulled eslint's chain in
+  and raised the count from 2 to 8. Clearing those two needs an eslint 8 to 9 migration.
+
 ## Known state, honestly
 
 This is a 2019 codebase kept for reference. Three things a reader will hit:
@@ -127,6 +144,14 @@ repository is large.
   The secret is not.
 - The session cookie is named `sessions`, lasts **24 hours**, has an **active duration of 5
   minutes**, and is `ephemeral`.
+
+## About this repository
+
+This is a clean history, rebuilt on 2026-11-10. Two files that had been committed by
+accident — `secret-config.json` and `views/pages/author-login.ejs`, the second one carrying
+a Google API key — are not in any commit here. The original history, with its 93 immutable
+pull-request refs, was moved to a private repository instead of being force-pushed into a
+shape it can no longer take.
 
 ## License
 
