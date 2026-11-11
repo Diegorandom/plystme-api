@@ -7,6 +7,29 @@ an exercise — it shipped, and the recommendation model was part of my responsi
 This README is written from the code, not from memory. Every claim below was checked against a
 file on 2026-11-10.
 
+## Architecture
+
+![Plyst Me architecture](plystmeLogin.png)
+
+*The product as deployed: the browser talks HTTP and Socket.IO to this backend. The backend reaches
+Neo4j over Bolt, a separate Python recommendation service over HTTP, and the Spotify Web API over
+HTTPS. The Python service is not in this repository; that is what the old `requirements.txt`
+reference was pointing at.*
+
+![Inside the server](docs/server-architecture.png)
+
+*Inside this repository: everything enters through Express and passes the middleware stack and the
+signed session cookie. The Socket.IO server is **not** a second process — it is mounted on the same
+app, which is why the event arrow leaves the container and comes back to the browser.*
+
+### One request, in order
+
+1. `morgan`, `body-parser`, `cookie-parser` and `method-override` run on every request.
+2. The signed `sessions` cookie is loaded and validated.
+3. `express-rate-limit` applies to the recommendation endpoints.
+4. A controller in `src/controllers/` handles the route and fans out to Neo4j or Spotify.
+5. New Relic records the trace around the whole thing.
+
 ## What the server does
 
 | Area | What it handles |
@@ -51,7 +74,8 @@ Two branches at startup, and they behave differently:
 | `client_id`, `client_secret` | Spotify OAuth |
 | `GRAPHENEDB_BOLT_URL`, `GRAPHENEDB_BOLT_USER`, `GRAPHENEDB_BOLT_PASSWORD` | Neo4j connection |
 
-There is no `requirements.txt` and no Python in this repository.
+There is no `requirements.txt` and no Python in this repository. The recommendation service
+in the product diagram above ran separately, over HTTP.
 
 ## HTTP surface
 
