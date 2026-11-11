@@ -7,15 +7,16 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "lint": "npx eslint --ext .js src --fix"
+    "start": "node index.js",
+    "lint": "npx eslint --ext .js src --fix",
+    "dev": "nodemon index.js"
   },
   "dependencies": {
     "axios": "^1.4.0",
     "body-parser": "*",
     "client-sessions": "^0.8.0",
     "cookie-parser": "*",
-    "ejs": "3.1.9",
+    "ejs": "^3.1.10",
     "express": "^4.18.2",
     "express-rate-limit": "^6.7.0",
     "fs": "*",
@@ -25,12 +26,11 @@
     "method-override": "^3.0.0",
     "morgan": "*",
     "neo4j-driver": "*",
-    "newrelic": "^10.3.0",
+    "newrelic": "^14.12.0",
     "sanitize-html": "^2.10.0",
     "shuffle-array": "^1.0.1",
     "socket.io": "^4.6.2",
-    "spotify-web-api-node": "^5.0.2",
-    "supercolliderjs": "*"
+    "spotify-web-api-node": "^5.0.2"
   },
   "repository": {
     "type": "git",
@@ -44,6 +44,7 @@
   "license": "MIT",
   "devDependencies": {
     "eslint": "^8.43.0",
-    "nodemon": "^2.0.22"
-  }
+    "nodemon": "^3.1.14"
+  },
+  "overrides": {}
 }
